@@ -19,6 +19,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'doc_type_id' => 1,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$Scj66Y94AE/QjR/fPHzd8ehQiXfttsO0wEVTyQwY10LAh1OKDJ/j6', // nomelase
