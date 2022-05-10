@@ -1,0 +1,230 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Usuarios",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/api/document-types": {
+            "get": {
+                "summary": "Listado de tipos de documentos",
+                "operationId": "eec9f3c0498ebf715ff8b37ecaa05e95",
+                "responses": {
+                    "200": {
+                        "description": "Retorna el listado d edocumentos."
+                    },
+                    "401": {
+                        "description": "No autorizado."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/document-types/create": {
+            "post": {
+                "summary": "Crear un tipo de documento",
+                "operationId": "b361c0a81cfce412e40cb17fb0c03359",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "nombre dle tipo de documento",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Retorna el documento creado."
+                    },
+                    "401": {
+                        "description": "No autorizado."
+                    },
+                    "400": {
+                        "description": "Campos invalidos."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/job-offers": {
+            "get": {
+                "summary": "Listado de ofertas con sus usuarios asociados, retorna solo las ofertas que tienen usuarios asociados",
+                "operationId": "e663be86860c992090c7671613ecfc3f",
+                "responses": {
+                    "200": {
+                        "description": "Retorna el listado de ofertas d etrabajo."
+                    },
+                    "401": {
+                        "description": "No autorizado."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/job-offers/create": {
+            "post": {
+                "summary": "Crear ofertas de empleo",
+                "operationId": "a36c62f0c4be40642e7a595e6dc3747c",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "nombre de la oferta de empleo",
+                        "required": true
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Estado de la oferta 0=inactiva, 1=Activa",
+                        "required": true
+                    },
+                    {
+                        "name": "users[]",
+                        "in": "query",
+                        "description": "Listado de Ids de usuarios existentes",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "enum",
+                                "enum": [
+                                    1,
+                                    2,
+                                    3
+                                ]
+                            },
+                            "example": [
+                                1,
+                                2
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "La oferta fue creada."
+                    },
+                    "400": {
+                        "description": "Parametros invalidas."
+                    },
+                    "500": {
+                        "description": "Error desconocido."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "summary": "Autenticar usuarios",
+                "operationId": "0fc9610184083ac6dddab2c63139225a",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "user email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "user password",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retorna el token jwt."
+                    },
+                    "400": {
+                        "description": "Credenciales invalidas."
+                    },
+                    "500": {
+                        "description": "Error desconocido."
+                    }
+                }
+            }
+        },
+        "/api/users/create": {
+            "post": {
+                "summary": "Crear usuarios",
+                "operationId": "6f3d7846f3ba79f1d71d00bec3cd6c6a",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "nombre del usuario",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email del usuario",
+                        "required": true
+                    },
+                    {
+                        "name": "document",
+                        "in": "query",
+                        "description": "Numero de documento del usuario",
+                        "required": true
+                    },
+                    {
+                        "name": "doc_type_id",
+                        "in": "query",
+                        "description": "Tipo de documento del usuario",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Retorna el usuario creado."
+                    },
+                    "400": {
+                        "description": "Parametros invalidas."
+                    },
+                    "500": {
+                        "description": "Error desconocido."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
